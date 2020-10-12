@@ -9,7 +9,7 @@ class Spritesheet{
     this.coluna = 0;
   }
   proximoQuadro(){
-    let agora = new Data().getTime();
+    let agora = new Date().getTime();
     if(!this.ultimoTempo) this.ultimoTempo = agora;
     if(agora - this.ultimoTempo < this.intervalo) return;
     if(this.coluna < this.numeroColuna-1)

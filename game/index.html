@@ -20,6 +20,7 @@
   <script src="./Bola.js"></script>
   <script src="./Heroi.js"></script>
   <script src="./Teclado.js"></script>
+  <script src="./Spritesheet.js"></script>
 </head>
 <body>
     <div class="container">
@@ -28,9 +29,12 @@
           const canvas = document.querySelector('#meucanvas');
           const context = canvas.getContext('2d');
 
+          let imageHeroi = new Image();
+          imageHeroi.src = './sprite.png';
+
           const animacao = new Animacao(context);
           const teclado = new Teclado(document);
-          const heroi = new Heroi(context,animacao,teclado);
+          const heroi = new Heroi(context,imageHeroi,animacao,teclado);
           heroi.y = 300;
           heroi.x = 300;
           
@@ -39,7 +43,9 @@
           })
 
           animacao.novoSprite(heroi);
-          animacao.ligar();
+          imageHeroi.onload = function(){
+            animacao.ligar();
+          }
       </script>
     </div>
 </body>
