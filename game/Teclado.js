@@ -1,7 +1,7 @@
-const UP = 87;
-const RIGHT = 68;
-const DOWN = 83;
-const LEFT = 65;
+const W = 87;
+const S = 83;
+const A = 65;
+const D = 68;
 const SHOOT = 32;
 
 class Teclado{
@@ -9,12 +9,12 @@ class Teclado{
     this.elemento = elemento;
     this.pressionadas = [];
     this.disparadas = [];
-    this.funcaoDisparo;
+    this.funcaoDisparo = [];
 
     this.elemento.addEventListener('keydown',(e)=>{
       let tecla = e.keyCode;
       this.pressionadas[tecla] = true;
-      if(!this.disparadas && this.funcaoDisparo){
+      if(!this.disparadas[tecla] && this.funcaoDisparo[tecla]){
         this.disparadas[tecla] = true;
         this.funcaoDisparo[tecla]();
       }
