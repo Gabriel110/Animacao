@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gabriel</title>
+  <script src="./SpriteSheet.js"></script>
+  <script src="./Heroi.js"></script>
+  <script src="./Animacao.js"></script>
+  <script src="./Teclado.js"></script>
+  <script src="./Bola.js"></script>
+
+</head>
+
+<body>
+  <canvas canvas width="990" height="600" style="border: solid black;"></canvas>
+</body>
+<script>
+  const cnv = document.querySelector('[canvas]');
+  const ctx = cnv.getContext('2d');
+
+  const link = new Image();
+  const teclado = new Teclado(document);
+  const heroi = new Heroi(ctx, link, 8, 10, teclado);
+  const animacao = new Animacao(ctx);
+  const b1 = new Bola(ctx);
+  b1.velocidadeX = 10;
+  b1.velocidadeY = -1;
+  b1.cor = 'red';
+  b1.raio = 30;
+  b1.x = 400;
+  b1.y = 400;
+
+  link.src = '../imgs/link.png';
+
+  animacao.novoSprite(heroi);
+  animacao.novoSprite(b1);
+  animacao.ligar();
+
+</script>
+
+</html>
