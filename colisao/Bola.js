@@ -1,18 +1,19 @@
 class Bola {
-  constructor(context) {
+  constructor(context, imagem) {
     this.context = context;
     this.velocidadeX = 0;
     this.velocidadeY = 0;
     this.cor = 'black';
-    this.raio = 10;
+    this.raio = 60;
     this.x = this.raio;
     this.y = this.raio;
+    this.imagem = imagem
   }
   atualizar() {
     let ctx = this.context;
-    if (this.x < this.raio || this.x > ctx.canvas.width - this.raio)
+    if (this.x < this.raio || this.x > ctx.canvas.width - this.raio*2)
       this.velocidadeX *= -1;
-    if (this.y < this.raio || this.y > ctx.canvas.height - this.raio)
+    if (this.y < this.raio || this.y > ctx.canvas.height - this.raio*2)
       this.velocidadeY *= -1;
 
     this.x += this.velocidadeX;
@@ -20,12 +21,15 @@ class Bola {
   }
   desenhar() {
     let ctx = this.context;
-    ctx.save();
-    ctx.fillStyle = this.cor;
-    ctx.beginPath();
-    ctx.arc(this.x, this.y, this.raio, 0, 2 * Math.PI, false);
-    ctx.fill();
-    ctx.restore();
+    // ctx.save();
+    // ctx.fillStyle = this.cor;
+    // ctx.beginPath();
+    // ctx.arc(this.x, this.y, this.raio, 0, 2 * Math.PI, false);
+    // ctx.fill();
+    // ctx.restore();
+
+    ctx.drawImage(this.imagem, this.x, this.y, this.imagem.width, this.imagem.height);
+    
   }
   retanguloColisao() {
     return [{

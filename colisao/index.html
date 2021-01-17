@@ -21,18 +21,22 @@
   const ctx = cnv.getContext('2d');
 
   const link = new Image();
+  const bola = new Image();
   const teclado = new Teclado(document);
   const heroi = new Heroi(ctx, link, 8, 10, teclado);
   const animacao = new Animacao(ctx);
-  const b1 = new Bola(ctx);
+  const b1 = new Bola(ctx,bola);
   b1.velocidadeX = 10;
   b1.velocidadeY = -1;
   b1.cor = 'red';
   b1.raio = 30;
-  b1.x = 400;
-  b1.y = 400;
+  b1.x = 100;
+  b1.y = 100;
 
   link.src = '../imgs/link.png';
+  bola.src = '../imgs/bola.png'
+  bola.width =100;
+  bola.height = 100;
 
   animacao.novoSprite(heroi);
   animacao.novoSprite(b1);
