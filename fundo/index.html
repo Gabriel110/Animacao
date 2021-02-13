@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fundos rolando em Parallax</title>
+  <script src="animacao.js"></script>
+  <script src="fundo.js"></script>
+  <script src="teclado.js"></script>
+  <script src="nave.js"></script>
+  <style>
+    #canvas_fundo {
+      border: solid 3px;
+      background: slategrey;
+    }
+    .container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <canvas id="canvas_fundo" width="500" height="600"></canvas>
+    <script>
+      let imgEspaco = new Image();
+      imgEspaco.src = '../imgs/fundo-espaco.png';
+      let imgEstrelas = new Image();
+      imgEstrelas.src = '../imgs/fundo-estrelas.png';
+      let imgNuvens = new Image();
+      imgNuvens.src = '../imgs/fundo-nuvens.png';
+
+      let carregadas = 0;
+      let total = 3;
+
+      imgEspaco.onload = carregado;
+      imgEstrelas.onload = carregado;
+      imgNuvens.onload = carregado;
+
+      function carregado() {
+        carregadas++;
+        if (carregadas == total) iniciar();
+      }
+
+      function iniciar() {
+        const canvas = document.getElementById('canvas_fundo');
+        const context = canvas.getContext('2d');
+
+        const fundoEspaco = new Fundo(context, imgEspaco);
+        const fundoEstrelas = new Fundo(context, imgEstrelas);
+        const fundoNuvens = new Fundo(context, imgNuvens);
+
+
+
+        const imgNave = new Image();
+        imgNave.src = '../imgs/nave.png';
+
+        fundoEspaco.velocidade = 3;
+        fundoEstrelas.velocidade = 7;
+        fundoNuvens.velocidade = 10;
+
+        let animacao = new Animacao(context);
+        animacao.novoSprite(fundoEspaco);
+        animacao.novoSprite(fundoEstrelas);
+        animacao.novoSprite(fundoNuvens);
+
+        animacao.ligar();
+      }
+    </script>
+  </div>
+</body>
+
+</html>
