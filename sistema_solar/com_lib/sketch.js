@@ -21,6 +21,7 @@ function setup() {
   venus = new Corpo(30, createVector(1, -200), createVector(2, 0))
   terra = new Corpo(35, createVector(1, -250), createVector(1.8, 0))
   
+  
 }
 
 function draw() {
@@ -50,22 +51,22 @@ function Corpo(_massa, _posicao, _velocidade){
   this.path = []
 
   this.desenhar = function(cor){
-    noStroke()
-    fill(cor)
-    ellipse(this.posicao.x, this.posicao.y, this.raio, this.raio)
+    
     stroke(30)
     for(let i = 0; i < this.path.length -2; i++){
       line(this.path[i].x, this.path[i].y, this.path[i+1].x, this.path[i+1].y)
     }
+    noStroke()
+    fill(cor)
+    ellipse(this.posicao.x, this.posicao.y, this.raio, this.raio)
+   
   }
 
   this.atulizar = function(){
     this.posicao.x += this.velocidade.x
     this.posicao.y += this.velocidade.y
     this.path.push(this.posicao.copy())
-    if(this.path.length > 50){
-      this.path.splice(0, 1)
-    }
+    
   }
 
   this.aplicarForca = function(forca){
@@ -75,13 +76,17 @@ function Corpo(_massa, _posicao, _velocidade){
 
   this.gravidade = function(planeta){
     let distacia = this.distanciaEntreDoisAstros(this.posicao.x, this.posicao.y, planeta.posicao.x, planeta.posicao.y)
-    let f = {x:((this.posicao.x - planeta.posicao.x) /distacia) , y:((this.posicao.y - planeta.posicao.y) / distacia)}
+    //let f = {x:((this.posicao.x - planeta.posicao.x) /distacia) , y:((this.posicao.y - planeta.posicao.y) / distacia)}
+    let f =  {y:0, y:0}
     let multMassas = this.massa*planeta.massa
     let multDistacia = distacia*distacia
     let constGravitacional = GRAVIDADE * multMassas / multDistacia
 
-    f.x *= constGravitacional
-    f.y *= constGravitacional
+    let cos = ((this.posicao.x - planeta.posicao.x) /distacia)
+    let sen = ((this.posicao.y - planeta.posicao.y) /distacia)
+
+    f.x = constGravitacional * cos
+    f.y = constGravitacional * sen
   
     planeta.aplicarForca(f)
     console.log(`Aplicando forca gravitacional: ${constGravitacional}`);
