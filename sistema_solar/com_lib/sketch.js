@@ -8,20 +8,16 @@ let saturno
 let urano
 let neturno
 
-let windowW = 900
-let windowH = 900
-let lateral = 100
+let windowW = 900//window.screen.width
+let windowH = 900//window.screen.height
 let GRAVIDADE = 4
 
 function setup() {
   createCanvas(windowW,windowH)
-
-  sol = new Corpo(200, createVector(0, 0), createVector(0, 0))
-  mercurio = new Corpo(25, createVector(1, -150), createVector(2.3, 0))
-  venus = new Corpo(30, createVector(1, -200), createVector(2, 0))
-  terra = new Corpo(35, createVector(1, -250), createVector(1.8, 0))
-  
-  
+  sol = new Astro(200, createVector(0, 0), createVector(0, 0))
+  mercurio = new Astro(25, createVector(1, -150), createVector(2.3, 0))
+  venus = new Astro(30, createVector(1, -200), createVector(2, 0))
+  terra = new Astro(35, createVector(1, -250), createVector(1.8, 0))
 }
 
 function draw() {
@@ -41,61 +37,4 @@ function draw() {
   sol.gravidade(terra)
   sol.gravidade(mercurio)
   sol.gravidade(venus)
-}
-
-function Corpo(_massa, _posicao, _velocidade){
-  this.massa = _massa
-  this.posicao = _posicao
-  this.velocidade = _velocidade
-  this.raio = this.massa
-  this.path = []
-
-  this.desenhar = function(cor){
-    
-    stroke(30)
-    for(let i = 0; i < this.path.length -2; i++){
-      line(this.path[i].x, this.path[i].y, this.path[i+1].x, this.path[i+1].y)
-    }
-    noStroke()
-    fill(cor)
-    ellipse(this.posicao.x, this.posicao.y, this.raio, this.raio)
-   
-  }
-
-  this.atulizar = function(){
-    this.posicao.x += this.velocidade.x
-    this.posicao.y += this.velocidade.y
-    this.path.push(this.posicao.copy())
-    
-  }
-
-  this.aplicarForca = function(forca){
-    this.velocidade.x += forca.x / this.massa
-    this.velocidade.y += forca.y / this.massa
-  }
-
-  this.gravidade = function(planeta){
-    let distacia = this.distanciaEntreDoisAstros(this.posicao.x, this.posicao.y, planeta.posicao.x, planeta.posicao.y)
-    //let f = {x:((this.posicao.x - planeta.posicao.x) /distacia) , y:((this.posicao.y - planeta.posicao.y) / distacia)}
-    let f =  {y:0, y:0}
-    let multMassas = this.massa*planeta.massa
-    let multDistacia = distacia*distacia
-    let constGravitacional = GRAVIDADE * multMassas / multDistacia
-
-    let cos = ((this.posicao.x - planeta.posicao.x) /distacia)
-    let sen = ((this.posicao.y - planeta.posicao.y) /distacia)
-
-    f.x = constGravitacional * cos
-    f.y = constGravitacional * sen
-  
-    planeta.aplicarForca(f)
-    console.log(`Aplicando forca gravitacional: ${constGravitacional}`);
-  }
-
-  this.distanciaEntreDoisAstros = function(x1, y1, x2, y2){
-    var a = x2 - x1;
-    var b = y2 - y1;
-    var c = Math.sqrt(Math.pow(a, 2) + Math.pow(b, 2));
-    return c;
-  }
 }
